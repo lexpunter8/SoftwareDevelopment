@@ -10,9 +10,8 @@ namespace Assets
 {
     public class WebsocketClient
     {
-        public WebsocketClient(string url, IWebsocketResponseHandler responseHandler)
+        public WebsocketClient(string url)
         {
-            Console.WriteLine("WebsocketClient");
             myWebSocket = new WebSocket(url);
             myWebSocket.Opened += MyWebSocket_Opened;
             myWebSocket.Closed += MyWebSocket_Closed;
@@ -22,8 +21,7 @@ namespace Assets
 
             myWebSocket.Open();
             IsOpen = true;
-
-            myResponseHandler = responseHandler;
+            
         }
 
         private IWebsocketResponseHandler myResponseHandler {get;set;}
@@ -61,13 +59,35 @@ namespace Assets
 
         private void MyWebSocket_Closed(object sender, EventArgs e)
         {
-            Console.WriteLine("Closed!");
             IsOpen = false;
         }
 
         private void MyWebSocket_Opened(object sender, EventArgs e)
         {
             IsOpen = true;
+        }
+
+        public void Send(TrafficLight trafficLight)
+        {
+            List<string> lights = new List<string>();
+            lights.Add(trafficLight.id);
+            string json = JsonConvert.SerializeObject(lights);
+            Send(json);
+        }
+
+        internal void Close()
+        {
+            myWebSocket.Close();
+        }
+
+        public void Send(IEnumerable<TrafficLight> trafficLight)
+        {
+            string json = JsonConvert.SerializeObject(trafficLight);
+            Send(json);
+        }
+        public void Send(string message)
+        {
+            myWebSocket.Send(message);
         }
     }
 }

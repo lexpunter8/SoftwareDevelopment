@@ -11,9 +11,11 @@ namespace Assets
         private MainController()
         {
             TrafficLights = new List<JsonTrafficLight>();
+            WebsocketClient = new WebsocketClient("ws://127.0.0.1:9090");
         }
 
         private static MainController myInstance;
+        public WebsocketClient WebsocketClient { get; set; }
 
         public static MainController Instance
         {

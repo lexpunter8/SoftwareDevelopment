@@ -56,4 +56,9 @@ public class TrafficLight : MonoBehaviour {
             UpdateColor();
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        MainController.Instance.WebsocketClient.Send(this);
+    }
 }
