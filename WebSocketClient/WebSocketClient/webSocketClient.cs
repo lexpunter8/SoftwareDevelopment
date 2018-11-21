@@ -24,7 +24,7 @@ namespace WebSocketClient
         private void MyWebSocket_MessageReceived(object sender, MessageReceivedEventArgs e)
         {
             myData = e.Message.ToString();
-            //if (!myData.StartsWith("{"))
+            //if (!myData.Start sWith("{"))
             //    return;
             //TrafficLight trafficLight = JsonConvert.DeserializeObject<TrafficLight>(myData);
             //TrafficLight lightToChange = myLights.FirstOrDefault(l => l.Light.Equals(trafficLight.Light, StringComparison.CurrentCultureIgnoreCase));
@@ -36,8 +36,8 @@ namespace WebSocketClient
         private WebSocket myWebSocket { get; set; }
         private List<TrafficLight> myLights { get; } = new List<TrafficLight>
         {
-            new TrafficLight{Light = "A1", Status = "Green", Timer = 0},
-            new TrafficLight{Light = "B1", Status = "Red", Timer = 0},
+            new TrafficLight{light = "A1", status = "Green", timer = 0},
+            new TrafficLight{light = "B1", status = "Red", timer = 0},
         };
         private void MyWebSocket_Error(object sender, SuperSocket.ClientEngine.ErrorEventArgs e)
         {
@@ -65,7 +65,7 @@ namespace WebSocketClient
         {
             foreach (TrafficLight light in myLights)
             {
-                Console.WriteLine($"Light: {light.Light}{Environment.NewLine}Staus: {light.Status}{Environment.NewLine}");
+                Console.WriteLine($"Light: {light.light}{Environment.NewLine}Staus: {light.status}{Environment.NewLine}");
             }
         }
 
@@ -88,9 +88,9 @@ namespace WebSocketClient
                     if (response.Equals("json"))
                     {
                         TrafficLight tl = new TrafficLight {
-                            Light = "A8",
-                            Status = "Red",
-                            Timer = 0
+                            light = "A8",
+                            status = "Red",
+                            timer = 0
                         };
                         response = JsonConvert.SerializeObject(tl);
                     }

@@ -8,8 +8,9 @@ namespace WebSocketClient
     {
         static void Main(string[] args)
         {
-            WebSocketClient ws = new WebSocketClient("ws://127.0.0.1:9090");
+            WebSocketClient ws = new WebSocketClient("ws://141.252.220.55:8080");
             ws.Start();
+            Console.ReadKey();
         }
     }
 }
