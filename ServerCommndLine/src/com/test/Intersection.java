@@ -23,7 +23,18 @@ public class Intersection {
             CreateTrafficLight("A7", "red", 0),
             CreateTrafficLight("A8", "red", 0),
             CreateTrafficLight("A9", "red", 0),
-            CreateTrafficLight("A10", "red", 0)
+            CreateTrafficLight("A10", "red", 0),
+            CreateTrafficLight("B1", "red", 0),
+            CreateTrafficLight("B2", "red", 0),
+            CreateTrafficLight("B3", "red", 0),
+            CreateTrafficLight("C1.1", "red", 0),
+            CreateTrafficLight("C1.2", "red", 0),
+            CreateTrafficLight("C2.1", "red", 0),
+            CreateTrafficLight("C2.2", "red", 0),
+            CreateTrafficLight("C3.1", "red", 0),
+            CreateTrafficLight("C3.2", "red", 0),
+            CreateTrafficLight("D1", "red", 0),
+            CreateTrafficLight("E1", "red", 0)
     );
 
     private TrafficLight CreateTrafficLight(String id, String status, int timer){
@@ -73,21 +84,16 @@ public class Intersection {
        put("A8", Arrays.asList("A1", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "D1"));
        put("A9", Arrays.asList("A1", "A4", "A5", "A8", "E1", "D1"));
        put("A10", Arrays.asList("A1", "A4", "A5", "A8", "E1", "D1"));
-       put("B1", Arrays.asList(""));
-       put("B2", Arrays.asList(""));
-       put("B3", Arrays.asList(""));
-       put("C1.1", Arrays.asList(""));
-       put("C1.2", Arrays.asList(""));
-       put("C2.1", Arrays.asList(""));
-       put("C2.2", Arrays.asList(""));
-       put("C3.1", Arrays.asList(""));
-       put("C3.2", Arrays.asList(""));
-       put("E1", Arrays.asList("A1", "A3", "A4", "A5", "A9", "A10", "D1"));
        put("D1", Arrays.asList("A1", "A2", "A3", "A5", "A6", "A7", "A8", "A9", "A10", "E1"));
+       put("E1", Arrays.asList("A1", "A3", "A4", "A5", "A9", "A10", "D1"));
 
     }};
 
     public List<String> getLightsToGreen(List<String> registeredLights){
+        if (isSoftTrafficMode(registeredLights))
+        {
+            return softTrafficMode();
+        }
         List<String> lightsToGreen = new ArrayList<>();
         for (String l :
                 registeredLights) {
@@ -100,6 +106,31 @@ public class Intersection {
             boolean canAdded = optionsForLight.containsAll(lightsToGreen);
             if (canAdded){
                 lightsToGreen.add(l);
+            }
+        }
+        return lightsToGreen;
+    }
+
+    private boolean isSoftTrafficMode(List<String> lights){
+        int occurrences = 0;
+        for (String l :
+                lights) {
+            if (l.startsWith("B") || l.startsWith("C"))
+            {
+                occurrences++;
+            }
+        }
+        return occurrences > 0;
+    }
+
+    private List<String> softTrafficMode()
+    {
+        List<String> lightsToGreen = new ArrayList<>();
+        for (TrafficLight l :
+                lights) {
+            if (l.light.startsWith("B") || l.light.startsWith("C"))
+            {
+                lightsToGreen.add(l.light);
             }
         }
         return lightsToGreen;

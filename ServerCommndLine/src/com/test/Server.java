@@ -23,6 +23,9 @@ public class Server extends WebSocketServer {
 
     public List<String> registeredTrafficLights = new ArrayList<>();
     private WebSocket currentWebsocket;
+    public boolean isConnected() {
+        return currentWebsocket != null;
+    }
 
     @Override
     public void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
@@ -48,7 +51,6 @@ public class Server extends WebSocketServer {
         Type type = new TypeToken<List<String>>() {}.getType();
         Gson g = new Gson();
         List<String> changedLights = g.fromJson(s, type);
-
         registeredTrafficLights.addAll(changedLights);
     }
 
